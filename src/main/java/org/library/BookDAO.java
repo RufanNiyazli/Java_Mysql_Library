@@ -40,4 +40,37 @@ public class BookDAO {
         }
 
     }
+
+    public void searchBook(String searchTitle, String searchAuthor, String searchGenre) {
+        String Sql = "SELECT * FROM books WHERE 1=1";
+        if (!searchTitle.isEmpty()) Sql += " AND title LIKE ?";
+        if (!searchAuthor.isEmpty()) Sql += " AND author LIKE ?";
+        if (!searchGenre.isEmpty()) Sql += " AND genre LIKE ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(Sql);
+        ) {
+            int ParamIndex = 1;
+            if (!searchTitle.isEmpty()) stmt.setString(ParamIndex++, "%" + searchTitle + "%");
+            if (!searchAuthor.isEmpty()) stmt.setString(ParamIndex++, "%" + searchAuthor + "%");
+            if (!searchGenre.isEmpty()) stmt.setString(ParamIndex++, "%" + searchGenre + "%");
+            try (ResultSet rs = stmt.executeQuery()) {
+                boolean found = false;
+                while (rs.next()) {
+
+                    found = true;
+                    found = true;
+                    System.out.println("📚 Kitab: " + rs.getString("title") +
+                            " | Müəllif: " + rs.getString("author") +
+                            " | Janr: " + rs.getString("genre"));
+                }
+                if (!found) {
+                    System.out.println("❌No results found.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 }

@@ -30,6 +30,8 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+src/main/java/org/library/DatabaseConnection.java
+
 
 ### VS Code ###
 .vscode/
@@ -38,4 +40,3 @@ build/
 ### Mac OS ###
 .DS_Store
 
-D:\Java_lessons\Java_MySql_Library\src\main\java\org\library\DatabaseConnection.java
